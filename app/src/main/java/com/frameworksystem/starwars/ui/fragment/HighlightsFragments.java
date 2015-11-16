@@ -1,4 +1,4 @@
-package com.frameworksystem.starwars.ui;
+package com.frameworksystem.starwars.ui.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
