@@ -10,7 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.frameworksystem.starwars.Mock;
 import com.frameworksystem.starwars.R;
+import com.frameworksystem.starwars.ui.fragment.DroidFragment;
 import com.frameworksystem.starwars.ui.fragment.HighlightsFragments;
 
 public class MainActivity extends AppCompatActivity
@@ -35,7 +37,8 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_main, HighlightsFragments.newInstance());
+                .replace(R.id.content_main, DroidFragment.newInstance(Mock.getDroid()))
+                .commit();
     }
 
     @Override
