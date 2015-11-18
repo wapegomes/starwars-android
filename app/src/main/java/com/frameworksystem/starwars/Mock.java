@@ -24,7 +24,7 @@ public class Mock {
         return droid;
     }
 
-    public static List<Droid> getDroidS() {
+    public static List<Droid> getDroids() {
 
         List<Droid> droids = new ArrayList<>();
 
@@ -37,17 +37,17 @@ public class Mock {
 
         Droid droid2 = new Droid();
 
-        droid.setName("PROTOCOL DROID");
-        droid.setDescription("Protocol droids are vital in smoothing differences encountered by the many farflung cultures interacting on a regular basis throughout the galaxy. Programmed in etiquette and equipped with formidable language skills, protocol droids assist diplomats and politicians and also serve as administrative aides and companions for high-ranking officials. They come in many shapes and sizes, but most are humanoid, like the company they keep.");
-        droid.setLink("http://www.starwars.com/databank/protocol-droid");
-        droid.setImage("http://img.lum.dolimg.com/v1/images/protocol_droid_6ddeb574.jpeg?region=243%2C0%2C1447%2C814&width=768");
+        droid2.setName("PROTOCOL DROID");
+        droid2.setDescription("Protocol droids are vital in smoothing differences encountered by the many farflung cultures interacting on a regular basis throughout the galaxy. Programmed in etiquette and equipped with formidable language skills, protocol droids assist diplomats and politicians and also serve as administrative aides and companions for high-ranking officials. They come in many shapes and sizes, but most are humanoid, like the company they keep.");
+        droid2.setLink("http://www.starwars.com/databank/protocol-droid");
+        droid2.setImage("http://img.lum.dolimg.com/v1/images/protocol_droid_6ddeb574.jpeg?region=243%2C0%2C1447%2C814&width=768");
 
         Droid droid3 = new Droid();
 
-        droid.setName("ASTROMECH DROID");
-        droid.setDescription("Astromech droids are a series of versatile utility robots generally used for the maintenance and repair of starships and related technology. These small droids are often equipped with a variety of tool-tipped appendages that are stowed in recessed compartments. The R2 unit is a popular example of an astromech droid.");
-        droid.setLink("http://www.starwars.com/databank/astromech-droid");
-        droid.setImage("http://img.lum.dolimg.com/v1/images/databank_astromechdroid_01_169_9d9b98b1.jpeg?region=155%2C238%2C1139%2C640&width=720");
+        droid3.setName("ASTROMECH DROID");
+        droid3.setDescription("Astromech droids are a series of versatile utility robots generally used for the maintenance and repair of starships and related technology. These small droids are often equipped with a variety of tool-tipped appendages that are stowed in recessed compartments. The R2 unit is a popular example of an astromech droid.");
+        droid3.setLink("http://www.starwars.com/databank/astromech-droid");
+        droid3.setImage("http://img.lum.dolimg.com/v1/images/databank_astromechdroid_01_169_9d9b98b1.jpeg?region=155%2C238%2C1139%2C640&width=720");
 
         droids.add(droid);
         droids.add(droid2);
