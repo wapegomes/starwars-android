@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Star Wars</string>
+
+    <string name="navigation_drawer_open">Abrir menu</string>
+    <string name="navigation_drawer_close">Fechar menu</string>
+
+    <string name="action_settings">Configurações</string>
+
+    <string name="title_characteres">Personagens</string>
+    <string name="title_droids">Droids</string>
+    <string name="title_vehicles">Naves</string>
+    <string name="title_films">Filmes</string>
+
+</resources>

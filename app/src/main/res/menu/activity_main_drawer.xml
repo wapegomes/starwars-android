@@ -5,19 +5,19 @@
         <item
             android:id="@+id/nav_characteres"
             android:icon="@drawable/ic_menu_characteres"
-            android:title="Characteres" />
+            android:title="@string/title_characteres" />
         <item
             android:id="@+id/nav_droids"
             android:icon="@drawable/ic_menu_droids"
-            android:title="Droids" />
+            android:title="@string/title_droids" />
         <item
             android:id="@+id/nav_vehicles"
             android:icon="@drawable/ic_menu_vehicles"
-            android:title="Vehicles" />
+            android:title="@string/title_vehicles" />
         <item
             android:id="@+id/nav_films"
             android:icon="@drawable/ic_menu_films"
-            android:title="Films" />
+            android:title="@string/title_films" />
     </group>
 
 </menu>

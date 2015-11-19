@@ -31,7 +31,8 @@ public class DroidsAdapter extends RecyclerView.Adapter<DroidsAdapter.ViewHolder
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        View view = LayoutInflater.from(context).inflate(R.layout.item_droid, parent, false);
+        View view = LayoutInflater.from(context)
+                .inflate(R.layout.item_droid, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
@@ -43,6 +44,7 @@ public class DroidsAdapter extends RecyclerView.Adapter<DroidsAdapter.ViewHolder
         Droid droid = droids.get(position);
         Picasso.with(context).load(droid.getImage()).into(holder.droidImage);
         holder.droidDescription.setText(droid.getDescription());
+        holder.droidName.setText(droid.getName());
     }
 
     @Override
@@ -54,12 +56,14 @@ public class DroidsAdapter extends RecyclerView.Adapter<DroidsAdapter.ViewHolder
 
         ImageView droidImage;
         TextView droidDescription;
+        TextView droidName;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             droidImage = (ImageView)itemView.findViewById(R.id.droid_image);
             droidDescription = (TextView)itemView.findViewById(R.id.droid_description);
+            droidName = (TextView)itemView.findViewById(R.id.droid_name);
         }
     }
 }
