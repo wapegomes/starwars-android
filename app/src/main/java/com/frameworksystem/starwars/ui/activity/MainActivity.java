@@ -2,6 +2,7 @@ package com.frameworksystem.starwars.ui.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,6 +16,7 @@ import com.frameworksystem.starwars.Mock;
 import com.frameworksystem.starwars.R;
 import com.frameworksystem.starwars.ui.fragment.DroidFragment;
 import com.frameworksystem.starwars.ui.fragment.DroidsFragment;
+import com.frameworksystem.starwars.ui.fragment.FilmsFragment;
 import com.frameworksystem.starwars.ui.fragment.HighlightsFragments;
 
 public class MainActivity extends AppCompatActivity
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_main, DroidsFragment.newInstance())
+                .replace(R.id.content_main, FilmsFragment.newInstance())
                 .commit();
     }
 
@@ -82,20 +84,26 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
+        Fragment fragment = null;
 
         if (id == R.id.nav_characteres) {
             // Handle the camera action
         } else if (id == R.id.nav_droids) {
-
-            fragmentManager.beginTransaction()
-                    .replace(R.id.content_main, DroidsFragment.newInstance())
-                    .commit();
-
+            fragment = DroidsFragment.newInstance();
         } else if (id == R.id.nav_vehicles) {
 
         } else if (id == R.id.nav_films) {
-
+            fragment = FilmsFragment.newInstance();
         }
+
+        if (fragment == null) {
+            fragment = HighlightsFragments.newInstance();
+        }
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_main, fragment)
+                .commit();
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
