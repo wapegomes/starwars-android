@@ -11,19 +11,19 @@ import android.view.ViewGroup;
 
 import com.frameworksystem.starwars.Mock;
 import com.frameworksystem.starwars.R;
-import com.frameworksystem.starwars.ui.adapters.DroidsAdapter;
+import com.frameworksystem.starwars.ui.adapters.FilmsAdapter;
 
 /**
  * Created by felipets on 11/18/15.
  */
-public class DroidsFragment extends Fragment {
+public class FilmsFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private DroidsAdapter droidsAdapter;
+    private FilmsAdapter filmsAdapter;
 
 
     public static Fragment newInstance() {
-        return new DroidsFragment();
+        return new FilmsFragment();
     }
 
     @Nullable
@@ -37,12 +37,12 @@ public class DroidsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         GridLayoutManager layoutManager =
-                new GridLayoutManager(getActivity(), 1);
+                new GridLayoutManager(getActivity(), 2);
 
-        droidsAdapter = new DroidsAdapter(getActivity(), Mock.getDroids());
+        filmsAdapter = new FilmsAdapter(getActivity(), Mock.getFilms());
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(droidsAdapter);
+        recyclerView.setAdapter(filmsAdapter);
     }
 }
