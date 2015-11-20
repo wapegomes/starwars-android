@@ -39,9 +39,10 @@ public class DroidsFragment extends Fragment {
         GridLayoutManager layoutManager =
                 new GridLayoutManager(getActivity(), 1);
 
-        droidsAdapter = new DroidsAdapter(getActivity(), Mock.getDroids());
-
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
+
+        droidsAdapter = new DroidsAdapter(getActivity(), Mock.getDroids(), recyclerView);
+
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(droidsAdapter);
     }

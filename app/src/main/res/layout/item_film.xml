@@ -6,31 +6,28 @@
     card_view:cardElevation="8dp"
     card_view:cardCornerRadius="2dp"
     card_view:cardUseCompatPadding="true"
-    card_view:cardPreventCornerOverlap="true">
+    card_view:cardPreventCornerOverlap="true"
+    card_view:cardBackgroundColor="#E6E6E6"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/film_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"/>
 
-        <ImageView
-            android:id="@+id/film_image"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:scaleType="centerCrop"
-            android:adjustViewBounds="true"/>
-
-        <TextView
-            android:id="@+id/film_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:textColor="@android:color/white"
-            android:textSize="14sp"
-            android:maxLines="3"
-            android:ellipsize="end"
-           android:padding="16dp"
-            android:background="#B3000000"/>
-
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/film_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:textColor="@android:color/white"
+        android:textSize="14sp"
+        android:maxLines="3"
+        android:ellipsize="end"
+        android:padding="8dp"
+        android:background="#B3000000"/>
 
 </android.support.v7.widget.CardView>

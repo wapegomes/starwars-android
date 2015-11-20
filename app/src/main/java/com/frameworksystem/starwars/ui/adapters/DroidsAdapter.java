@@ -1,6 +1,7 @@
 package com.frameworksystem.starwars.ui.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.frameworksystem.starwars.R;
 import com.frameworksystem.starwars.model.Droid;
+import com.frameworksystem.starwars.ui.activity.DroidDetailActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -22,10 +24,12 @@ public class DroidsAdapter extends RecyclerView.Adapter<DroidsAdapter.ViewHolder
 
     private Context context;
     private List<Droid> droids;
+    private RecyclerView recyclerView;
 
-    public DroidsAdapter(Context context, List<Droid> droids) {
+    public DroidsAdapter(Context context, List<Droid> droids, RecyclerView recyclerView) {
         this.context = context;
         this.droids = droids;
+        this.recyclerView = recyclerView;
     }
 
     @Override
@@ -64,6 +68,22 @@ public class DroidsAdapter extends RecyclerView.Adapter<DroidsAdapter.ViewHolder
             droidImage = (ImageView)itemView.findViewById(R.id.droid_image);
             droidDescription = (TextView)itemView.findViewById(R.id.droid_description);
             droidName = (TextView)itemView.findViewById(R.id.droid_name);
+
+            itemView.setOnClickListener(onClickListener);
         }
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int position = recyclerView.getChildAdapterPosition(v);
+                Droid droid = droids.get(position);
+
+                Intent intent = new Intent(context, DroidDetailActivity.class);
+                intent.putExtra("droid", droid);
+                context.startActivity(intent);
+            }
+        };
+
     }
 }
