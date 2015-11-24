@@ -66,6 +66,7 @@ public class Mock {
         film.setDescription("Luke Skywalker heads a mission to rescue Han Solo from the clutches of Jabba the Hutt, and faces Darth Vader one last time.");
         film.setLink("http://www.starwars.com/films/star-wars-episode-vi-return-of-the-jedi/");
         film.setImage("http://img.lum.dolimg.com/v1/images/Star-Wars-Return-Jedi-VI-Poster_a10501d2.jpeg?region=12%2C9%2C618%2C982&width=480");
+        film.setYear(1983);
         films.add(film);
 
         Film film2 = new Film();
@@ -73,6 +74,7 @@ public class Mock {
         film2.setDescription("After the destruction of the Death Star, the Empire has regrouped -- with Darth Vader leading the hunt for Luke Skywalker.");
         film2.setLink("http://www.starwars.com/films/star-wars-episode-v-the-empire-strikes-back");
         film2.setImage("http://img.lum.dolimg.com/v1/images/Star-Wars-Empire-Strikes-Back-V-Poster_878f7fce.jpeg?region=25%2C22%2C612%2C953&width=480");
+        film2.setYear(1980);
         films.add(film2);
 
         Film film3 = new Film();
@@ -80,6 +82,7 @@ public class Mock {
         film3.setDescription("Luke Skywalker begins a journey that will change the galaxy, as he leaves his home planet, battles the evil Empire, and learns the ways of the Force.");
         film3.setLink("http://www.starwars.com/films/star-wars-episode-iv-a-new-hope");
         film3.setImage("http://img.lum.dolimg.com/v1/images/Star-Wars-New-Hope-IV-Poster_c217085b.jpeg?region=49%2C43%2C580%2C914&width=480");
+        film3.setYear(1977);
         films.add(film3);
 
 
@@ -88,6 +91,7 @@ public class Mock {
         film4.setDescription("Faced with haunting premonitions that his secret wife, Padmé Amidala, will die, Anakin Skywalker is seduced by the dark side.");
         film4.setLink("http://www.starwars.com/films/star-wars-episode-iii-revenge-of-the-sith");
         film4.setImage("http://img.lum.dolimg.com/v1/images/Star-Wars-Revenge-Sith-III-Poster_646108ce.jpeg?region=0%2C0%2C736%2C1090&width=480");
+        film4.setYear(2005);
         films.add(film4);
 
 
@@ -96,6 +100,7 @@ public class Mock {
         film5.setDescription("Padawan Anakin Skywalker must choose between his Jedi duty and forbidden love, while Obi-Wan Kenobi uncovers a sinister plot that leads to war.");
         film5.setLink("http://www.starwars.com/films/star-wars-episode-ii-attack-of-the-clones");
         film5.setImage("http://img.lum.dolimg.com/v1/images/Star-Wars-Attack-Clones-II-Poster_53baa2e7.jpeg?region=18%2C0%2C660%2C1000&width=480");
+        film5.setYear(2002);
         films.add(film5);
 
 
@@ -104,6 +109,7 @@ public class Mock {
         film6.setDescription("Anakin Skywalker, a young slave strong with the Force, is discovered on Tatooine. Meanwhile, the evil Sith have returned, enacting their plot for revenge against the Jedi.");
         film6.setLink("http://www.starwars.com/films/star-wars-episode-i-the-phantom-menace");
         film6.setImage("http://img.lum.dolimg.com/v1/images/Star-Wars-Phantom-Menace-I-Poster_3c1ff9eb.jpeg?region=15%2C9%2C651%2C979&width=480");
+        film6.setYear(1999);
         films.add(film6);
 
         return films;

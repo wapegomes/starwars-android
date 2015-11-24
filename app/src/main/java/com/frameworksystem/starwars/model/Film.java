@@ -10,6 +10,7 @@ public class Film {
     private String description;
     private String image;
     private String link;
+    private int year;
 
     public String getId() {
         return id;
@@ -49,5 +50,13 @@ public class Film {
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }
