@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/toolbar"  />
+
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_marginTop="12dp"
+        android:layout_width="160dp"
+        android:layout_height="120dp"
+       android:layout_gravity="center"
+        android:paddingTop="16dp"
+        android:background="@color/cardview_dark_background">
+
+    </ImageView>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <!-- Compat é sempre compatível com todas a versoes do android -->
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_name"
+            android:maxLength="100"
+            android:layout_width="match_parent"
+            android:hint="@string/title_user_name"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_email"
+            android:layout_width="match_parent"
+            android:hint="@string/title_user_email"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_password"
+            android:inputType="number"
+            android:password="true"
+            android:layout_width="match_parent"
+            android:hint="@string/title_password"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/user_confirm_passsword"
+            android:password="true"
+            android:inputType="number"
+            android:layout_width="match_parent"
+            android:hint="@string/title_confirm_pass"
+            android:layout_height="wrap_content" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_cadastrar"
+        android:inputType="number"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="@string/title_register"/>
+
+</LinearLayout>
