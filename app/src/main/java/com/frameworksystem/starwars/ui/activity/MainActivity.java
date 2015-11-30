@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -14,13 +15,18 @@ import android.view.MenuItem;
 
 import com.frameworksystem.starwars.Mock;
 import com.frameworksystem.starwars.R;
+import com.frameworksystem.starwars.model.User;
 import com.frameworksystem.starwars.ui.fragment.DroidFragment;
 import com.frameworksystem.starwars.ui.fragment.DroidsFragment;
 import com.frameworksystem.starwars.ui.fragment.FilmsFragment;
 import com.frameworksystem.starwars.ui.fragment.HighlightsFragments;
+import com.frameworksystem.starwars.ui.fragment.LoginFragment;
+
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, LoginFragment.OnLoginListener {
+
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,11 +43,11 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_main, FilmsFragment.newInstance())
+                .replace(R.id.content_main, DroidsFragment.newInstance())
                 .commit();
     }
 
@@ -83,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction beginTransaction = getSupportFragmentManager().beginTransaction();
         Fragment fragment = null;
 
         if (id == R.id.nav_characteres) {
@@ -95,12 +101,20 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_films) {
             fragment = FilmsFragment.newInstance();
         }
+        else if (id == R.id.nav_login) {
+            LoginFragment loginFragment = LoginFragment.newInstance();
+            loginFragment.setOnLoginListener(this);
+            beginTransaction.addToBackStack(LoginFragment.class.getName());
+        }
+        else if (id == R.id.nav_logout) {
+            hideMenuLogin(false);
+        }
 
         if (fragment == null) {
             fragment = HighlightsFragments.newInstance();
         }
 
-        fragmentManager.beginTransaction()
+        beginTransaction
                 .replace(R.id.content_main, fragment)
                 .commit();
 
@@ -109,5 +123,23 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
 
         return true;
+    }
+
+    @Override
+    public void onLogin(User user) {
+        getSupportFragmentManager().popBackStack();
+        hideMenuLogin(true);
+    }
+
+    private void hideMenuLogin(boolean hide) {
+        Menu menu = navigationView.getMenu();
+
+        MenuItem itemLogin = menu.findItem(R.id.nav_login);
+        MenuItem itemLogout = menu.findItem(R.id.nav_logout);
+        MenuItem itemProfile = menu.findItem(R.id.nav_profile);
+
+        itemLogin.setVisible(hide);
+        itemLogout.setVisible(!hide);
+        itemProfile.setVisible(!hide);
     }
 }

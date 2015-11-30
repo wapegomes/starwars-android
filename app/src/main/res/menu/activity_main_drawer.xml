@@ -20,4 +20,25 @@
             android:title="@string/title_films" />
     </group>
 
+    <item android:title="@string/title_user">
+        <menu>
+            <item
+                android:id="@+id/nav_login"
+                android:icon="@drawable/ic_menu_login"
+                android:title="@string/title_login"/>
+
+            <item
+                android:id="@+id/nav_profile"
+                android:icon="@drawable/ic_menu_profile"
+                android:title="@string/title_login"
+                android:visible="false"/>
+
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_logout"
+                android:title="@string/title_logout"
+                android:visible="false"/>
+        </menu>
+    </item>
+
 </menu>
