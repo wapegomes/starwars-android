@@ -22,5 +22,7 @@
 
     <string name="title_user">User</string>
     <string name="title_logout">Logout</string>
+    <string name="title_favorite">Favorite</string>
+    <string name="title_share">Share</string>
 
 </resources>

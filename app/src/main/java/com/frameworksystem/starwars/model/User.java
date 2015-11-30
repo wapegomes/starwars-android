@@ -1,9 +1,11 @@
 package com.frameworksystem.starwars.model;
 
+import java.io.Serializable;
+
 /**
  * Created by felipets on 11/30/15.
  */
-public class User {
+public class User implements Serializable{
 
     private String id;
     private String name;

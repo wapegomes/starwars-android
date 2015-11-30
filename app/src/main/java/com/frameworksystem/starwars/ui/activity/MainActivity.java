@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity
             LoginFragment loginFragment = LoginFragment.newInstance();
             loginFragment.setOnLoginListener(this);
             beginTransaction.addToBackStack(LoginFragment.class.getName());
+            fragment = loginFragment;
         }
         else if (id == R.id.nav_logout) {
             hideMenuLogin(false);
