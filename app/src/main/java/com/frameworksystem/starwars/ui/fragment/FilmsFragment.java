@@ -36,8 +36,10 @@ public class FilmsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        int collum = getResources().getInteger(R.integer.films_collum);
+
         GridLayoutManager layoutManager =
-                new GridLayoutManager(getActivity(), 2);
+                new GridLayoutManager(getActivity(), collum);
 
         filmsAdapter = new FilmsAdapter(getActivity(), Mock.getFilms());
 

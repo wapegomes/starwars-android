@@ -36,8 +36,10 @@ public class DroidsFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        int collum = getResources().getInteger(R.integer.droids_collum);
+
         GridLayoutManager layoutManager =
-                new GridLayoutManager(getActivity(), 1);
+                new GridLayoutManager(getActivity(), collum);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
 

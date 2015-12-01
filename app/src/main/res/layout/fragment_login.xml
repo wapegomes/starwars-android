@@ -43,4 +43,11 @@
         android:layout_height="50dp"
         android:text="@string/title_login"/>
 
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_height="50dp"
+        android:text="Register"/>
+
 </LinearLayout>
