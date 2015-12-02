@@ -1,5 +1,7 @@
 package com.frameworksystem.starwars.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
 
 /**
@@ -7,7 +9,9 @@ import java.io.Serializable;
  */
 public class User implements Serializable{
 
+    @SerializedName("_id")
     private String id;
+
     private String name;
     private String email;
     private String password;

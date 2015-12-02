@@ -8,11 +8,14 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.AppCompatEditText;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.frameworksystem.starwars.R;
+import com.frameworksystem.starwars.api.UserApi;
 import com.frameworksystem.starwars.model.User;
 import com.frameworksystem.starwars.ui.activity.RegisterActivity;
 
@@ -52,9 +55,7 @@ public class LoginFragment extends Fragment {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (onLoginListener != null) {
-                    onLoginListener.onLogin(new User());
-                }
+                login();
             }
         });
 
@@ -65,7 +66,25 @@ public class LoginFragment extends Fragment {
                 startActivityForResult(intent, 99);
             }
         });
+    }
 
+    private void login() {
+
+        String email = userEmail.getText().toString();
+        String password = userPassword.getText().toString();
+
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            Toast.makeText(getActivity(), R.string.msg_error_user_invalid, Toast.LENGTH_SHORT)
+                    .show();
+            return;
+        }
+
+        User user = new User();
+        user.setEmail(email);
+        user.setPassword(password);
+
+        UserApi userApi = new UserApi(getActivity());
+        userApi.login(user, onLoginListener);
     }
 
     @Override
@@ -75,7 +94,7 @@ public class LoginFragment extends Fragment {
         if (requestCode == 99 && resultCode == Activity.RESULT_OK && data != null) {
             User user = (User)data.getSerializableExtra("user");
             if (onLoginListener != null) {
-                onLoginListener.onLogin(user);
+                onLoginListener.onLogin(user, 0);
             }
         }
     }
@@ -85,6 +104,6 @@ public class LoginFragment extends Fragment {
     }
 
     public interface OnLoginListener {
-        void onLogin(User user);
+        void onLogin(User user, int errorCode);
     }
 }

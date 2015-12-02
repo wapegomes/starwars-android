@@ -3,7 +3,6 @@ package com.frameworksystem.starwars.ui.activity;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -12,21 +11,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
-import com.frameworksystem.starwars.Mock;
+import com.frameworksystem.starwars.Constants;
 import com.frameworksystem.starwars.R;
 import com.frameworksystem.starwars.model.User;
-import com.frameworksystem.starwars.ui.fragment.DroidFragment;
 import com.frameworksystem.starwars.ui.fragment.DroidsFragment;
 import com.frameworksystem.starwars.ui.fragment.FilmsFragment;
 import com.frameworksystem.starwars.ui.fragment.HighlightsFragments;
 import com.frameworksystem.starwars.ui.fragment.LoginFragment;
+import com.squareup.picasso.Picasso;
 
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, LoginFragment.OnLoginListener {
 
     private NavigationView navigationView;
+    private ImageView headerImage;
+    private TextView headerName;
+    private TextView headerEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,11 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_main, DroidsFragment.newInstance())
                 .commit();
+
+        View header = navigationView.getHeaderView(0);
+        headerEmail = (TextView)header.findViewById(R.id.header_email);
+        headerName = (TextView)header.findViewById(R.id.header_name);
+        headerImage = (ImageView)header.findViewById(R.id.header_image);
     }
 
     @Override
@@ -108,7 +119,7 @@ public class MainActivity extends AppCompatActivity
             fragment = loginFragment;
         }
         else if (id == R.id.nav_logout) {
-            hideMenuLogin(false);
+            showMenuLogin(true);
         }
 
         if (fragment == null) {
@@ -127,12 +138,38 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onLogin(User user) {
+    public void onLogin(final User user, int erroCode) {
+
+        if (user == null) {
+
+            int message = R.string.msg_error_generic;
+
+            if (erroCode == 401) {
+                message = R.string.msg_error_user_invalid;
+            }
+
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateHeader(null);
+                }
+            });
+            return;
+        }
+
         getSupportFragmentManager().popBackStack();
-        hideMenuLogin(true);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                showMenuLogin(false);
+                updateHeader(user);
+            }
+        });
     }
 
-    private void hideMenuLogin(boolean hide) {
+    private void showMenuLogin(boolean hide) {
         Menu menu = navigationView.getMenu();
 
         MenuItem itemLogin = menu.findItem(R.id.nav_login);
@@ -142,5 +179,20 @@ public class MainActivity extends AppCompatActivity
         itemLogin.setVisible(hide);
         itemLogout.setVisible(!hide);
         itemProfile.setVisible(!hide);
+    }
+
+    private void updateHeader(User user) {
+
+        if (user != null) {
+            String imageUrl = String.format(Constants.BASE_URL_IMAGE, user.getImage());
+            Picasso.with(this).load(imageUrl).into(headerImage);
+            headerName.setText(user.getName());
+            headerEmail.setText(user.getEmail());
+        }
+        else {
+            headerEmail.setText("");
+            headerName.setText("");
+            headerImage.setImageDrawable(null);
+        }
     }
 }

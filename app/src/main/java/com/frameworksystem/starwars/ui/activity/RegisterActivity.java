@@ -3,6 +3,7 @@ package com.frameworksystem.starwars.ui.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,10 +17,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.frameworksystem.starwars.R;
+import com.frameworksystem.starwars.api.UserApi;
 import com.frameworksystem.starwars.model.Film;
 import com.frameworksystem.starwars.model.User;
+import com.frameworksystem.starwars.ui.fragment.LoginFragment;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -35,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
     private AppCompatEditText userConfirmPassword;
     private ImageView userImage;
     private Uri mImageCaptureUri;
+    private UserApi userApi;
 
     //no oncreate se define o layout da activity
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,16 +78,11 @@ public class RegisterActivity extends AppCompatActivity {
         if(password.equals(confirmPassWord)){
 
             User user = new User();
-
             user.setName(userName.getText().toString());
             user.setEmail(userEmail.getText().toString());
-            //forma de comunicação no andorid é a intent
-            Intent intent = new Intent();
-            //passando parametros para a outra tela
-            intent.putExtra("user", user);
-            setResult(RESULT_OK, intent);
-            //fechar a tela via progração
-            finish();
+            user.setPassword(password);
+
+            register(user);
         }
     }
 
@@ -148,11 +148,80 @@ public class RegisterActivity extends AppCompatActivity {
 
         if (resultCode == RESULT_OK) {
             if (requestCode == 101 && data!= null) {
-                Picasso.with(this).load(data.getData()).into(userImage);
+                mImageCaptureUri = data.getData();
+                Picasso.with(this).load(mImageCaptureUri).into(userImage);
             }
             else if (requestCode == 102) {
                 Picasso.with(this).load(mImageCaptureUri).into(userImage);
             }
         }
+    }
+
+    private void register(User user) {
+        userApi = new UserApi(this);
+        userApi.register(user, new LoginFragment.OnLoginListener() {
+            @Override
+            public void onLogin(User user, int errorCode) {
+
+                if (user != null) {
+                    uploadPhoto(user);
+                } else {
+                    showError(errorCode);
+                }
+            }
+        });
+    }
+
+    private void showError(int errorCode) {
+        String message = getString(R.string.msg_error_generic);
+
+        if (errorCode == 409) {
+            message = "E-mail já cadastrado";
+        }
+
+        Toast.makeText(this, message, Toast.LENGTH_SHORT)
+                .show();
+    }
+
+    private void uploadPhoto(final User user) {
+
+        if (mImageCaptureUri == null) {
+            close(user);
+            return;
+        }
+
+        String path = convertMediaUriToPath(mImageCaptureUri);
+        userApi.uploadPhoto(user.getId(), path, new OnUploadPhotoUser() {
+            @Override
+            public void onUpload(User mUser) {
+                if (mUser != null) {
+                    close(mUser);
+                }
+                else {
+                    close(user);
+                }
+            }
+        });
+    }
+
+    private void close(User user) {
+        Intent intent = new Intent();
+        intent.putExtra("user", user);
+        setResult(RESULT_OK, intent);
+        finish();
+    }
+
+    public interface OnUploadPhotoUser {
+        void onUpload(User user);
+    }
+
+    private String convertMediaUriToPath(Uri uri) {
+        String [] proj={MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri, proj, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String path = cursor.getString(column_index);
+        cursor.close();
+        return path;
     }
 }
