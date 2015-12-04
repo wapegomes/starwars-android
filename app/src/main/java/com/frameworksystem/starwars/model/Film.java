@@ -1,5 +1,7 @@
 package com.frameworksystem.starwars.model;
 
+import java.util.List;
+
 /**
  * Created by felipets on 11/19/15.
  */
@@ -11,6 +13,15 @@ public class Film {
     private String image;
     private String link;
     private int year;
+    private List<Characters> characters;
+
+    public List<Characters> getCharacters() {
+        return characters;
+    }
+
+    public void setCharacters(List<Characters> characters) {
+        this.characters = characters;
+    }
 
     public String getId() {
         return id;

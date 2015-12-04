@@ -190,7 +190,16 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        String path = convertMediaUriToPath(mImageCaptureUri);
+        String uri = mImageCaptureUri.toString();
+        String path;
+
+        if (uri.startsWith("content:")) {
+            path = convertMediaUriToPath(mImageCaptureUri);
+        }
+        else {
+             path = mImageCaptureUri.getPath();
+        }
+
         userApi.uploadPhoto(user.getId(), path, new OnUploadPhotoUser() {
             @Override
             public void onUpload(User mUser) {

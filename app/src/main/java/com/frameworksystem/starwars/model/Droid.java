@@ -1,17 +1,23 @@
 package com.frameworksystem.starwars.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by felipets on 11/17/15.
  */
 public class Droid implements Serializable{
 
+    @SerializedName("_id")
     private String id;
     private String name;
     private String description;
     private String image;
     private String link;
+    private Dimensions dimensions;
+    private List<String> appearances;
 
     public String getId() {
         return id;
@@ -51,5 +57,21 @@ public class Droid implements Serializable{
 
     public void setLink(String link) {
         this.link = link;
+    }
+
+    public Dimensions getDimensions() {
+        return dimensions;
+    }
+
+    public void setDimensions(Dimensions dimensions) {
+        this.dimensions = dimensions;
+    }
+
+    public List<String> getAppearances() {
+        return appearances;
+    }
+
+    public void setAppearances(List<String> appearances) {
+        this.appearances = appearances;
     }
 }

@@ -110,10 +110,10 @@ public class UserApi {
         File file = new File(path);
 
         RequestBody requestBody = new MultipartBuilder()
-                .addPart(
-                        Headers.of("Content-Disposition", "form-data; name=\"image\""),
-                        RequestBody.create(Constants.MEDIA_TYPE_IMAGE, file)
-                ).build();
+                .type(MultipartBuilder.FORM)
+                .addFormDataPart("file", file.getName(),
+                        RequestBody.create(Constants.MEDIA_TYPE_IMAGE, file))
+                .build();
 
         Request request = new Request.Builder()
                 .url(String.format(Constants.API_UPLOAD_PHOTO_USER, id))
