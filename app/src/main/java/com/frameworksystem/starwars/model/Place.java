@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Created by felipe.arimateia on 12/8/2015.
  */
-public class Location implements Serializable {
+public class Place implements Serializable {
 
     @SerializedName("_id")
     private String id;
