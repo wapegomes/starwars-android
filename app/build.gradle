@@ -1,9 +1,16 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        signing {
+            keyAlias 'starwarsapp'
+            keyPassword 'sw1234'
+            storeFile file('../keystore.jks')
+            storePassword 'sw1234'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-
     defaultConfig {
         applicationId "com.frameworksystem.starwars"
         minSdkVersion 15
@@ -15,6 +22,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.signing
+        }
+        debug {
+            signingConfig signingConfigs.signing
         }
     }
 }
@@ -30,4 +41,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.5'
     compile 'com.facebook.stetho:stetho:1.2.0'
     compile 'com.facebook.stetho:stetho-okhttp:1.2.0'
+    compile 'com.google.android.gms:play-services-maps:8.3.0'
+    compile 'com.google.android.gms:play-services-gcm:8.3.0'
 }

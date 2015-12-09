@@ -23,6 +23,7 @@ import com.frameworksystem.starwars.ui.fragment.DroidsFragment;
 import com.frameworksystem.starwars.ui.fragment.FilmsFragment;
 import com.frameworksystem.starwars.ui.fragment.HighlightsFragments;
 import com.frameworksystem.starwars.ui.fragment.LoginFragment;
+import com.frameworksystem.starwars.ui.fragment.PlacesFragment;
 import com.squareup.picasso.Picasso;
 
 
@@ -120,6 +121,9 @@ public class MainActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_logout) {
             showMenuLogin(true);
+        }
+        else if (id == R.id.nav_places) {
+            fragment = PlacesFragment.newInstance();
         }
 
         if (fragment == null) {
