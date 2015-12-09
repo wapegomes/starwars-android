@@ -1,5 +1,6 @@
 package com.frameworksystem.starwars.ui.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,19 @@ import android.view.ViewGroup;
 import com.frameworksystem.starwars.R;
 import com.frameworksystem.starwars.api.PlacesApi;
 import com.frameworksystem.starwars.model.Place;
+import com.frameworksystem.starwars.ui.activity.PlaceActivity;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -26,6 +32,7 @@ import java.util.List;
 public class PlacesFragment extends Fragment {
 
     private GoogleMap googleMap;
+    private HashMap<Marker, Place> markerPlaces = new HashMap<>();
 
     public static Fragment newInstance() {
         PlacesFragment fragment = new PlacesFragment();
@@ -81,29 +88,42 @@ public class PlacesFragment extends Fragment {
                        }
                    }
                });
-
             }
         });
     }
 
     private void addMarkes(List<Place> places) {
+
+        LatLngBounds.Builder builder = new LatLngBounds.Builder();
+
         for (Place place: places) {
 
             LatLng position = new LatLng(place.getLatitude(), place.getLongitude());
+            builder.include(position);
 
             MarkerOptions markerOptions = new MarkerOptions()
                     .title(place.getTitle())
                     .snippet(place.getDescription())
                     .position(position);
-            
-            googleMap.addMarker(markerOptions);
 
+            Marker marker = googleMap.addMarker(markerOptions);
+            markerPlaces.put(marker,place);
         }
+
+        LatLngBounds bounds = builder.build();
+
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, 50);
+        googleMap.moveCamera(cameraUpdate);
     }
 
     private GoogleMap.OnInfoWindowClickListener onInfoWindowClickListener = new GoogleMap.OnInfoWindowClickListener() {
         @Override
         public void onInfoWindowClick(Marker marker) {
+            Place place = markerPlaces.get(marker);
+
+            Intent intent = new Intent(getActivity(), PlaceActivity.class);
+            intent.putExtra("place",place);
+            startActivity(intent);
 
         }
     };
