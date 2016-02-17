@@ -9,11 +9,16 @@ import android.util.Log;
 
 import com.frameworksystem.starwars.Constants;
 import com.frameworksystem.starwars.R;
+import com.frameworksystem.starwars.StarWarsApp;
 import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import java.io.IOException;
+import java.net.UnknownServiceException;
 
 /**
  * Created by felipe.arimateia on 12/8/2015.
@@ -72,8 +77,21 @@ public class RegistrationIntentService extends IntentService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
+    private void sendRegistrationToServer(String token) throws IOException {
         // Add custom implementation, as needed.
+        OkHttpClient client = StarWarsApp.getInstance(this).getOkHttpClient();
+
+        String url = String.format(Constants.API_SAVE_DEVICE_TOKEN, token);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        if (!response.isSuccessful()) {
+            throw new UnknownServiceException();
+        }
     }
 
 }

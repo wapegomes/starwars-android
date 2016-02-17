@@ -13,6 +13,7 @@ public interface Constants {
     String API_DROIDS = Constants.BASE_URL + "/droids";
     String API_FILMS = BASE_URL + "/films";
     String API_LOCATIONS = BASE_URL + "/locations";
+    String API_SAVE_DEVICE_TOKEN = BASE_URL + "/devices/save/%s";
     String BASE_URL_IMAGE = Constants.BASE_URL + "/images/%s";
     String API_UPLOAD_PHOTO_USER = BASE_URL + "/users/uploadPhoto/%s";
 

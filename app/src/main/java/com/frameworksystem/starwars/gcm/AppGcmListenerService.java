@@ -11,8 +11,13 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.frameworksystem.starwars.R;
+import com.frameworksystem.starwars.model.Droid;
+import com.frameworksystem.starwars.ui.activity.DroidDetailActivity;
 import com.frameworksystem.starwars.ui.activity.MainActivity;
 import com.google.android.gms.gcm.GcmListenerService;
+import com.google.gson.Gson;
+
+import java.io.Serializable;
 
 /**
  * Created by felipe.arimateia on 12/8/2015.
@@ -32,24 +37,30 @@ public class AppGcmListenerService extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String message = data.getString("message");
+        String content = data.getString("content");
+        String type = data.getString("type");
+
         Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "Content: " + content);
 
+        Serializable object = paserJson(type, content);
 
-        // [START_EXCLUDE]
-        /**
-         * Production applications would usually process the message here.
-         * Eg: - Syncing with server.
-         *     - Store message in local database.
-         *     - Update UI.
-         */
+        Intent intent = null;
+        String message = "";
 
-        /**
-         * In some cases it may be useful to show a notification indicating to the user
-         * that a message was received.
-         */
-        sendNotification(message);
+        if (object instanceof Droid) {
+            Droid droid = (Droid)object;
+            message = "O droid " + droid.getName() + " foi cadastrado.";
+            intent = new Intent(this, DroidDetailActivity.class);
+        }
+        else {
+            intent = new Intent(this, MainActivity.class);
+        }
+
+        intent.putExtra(type, object);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        sendNotification(type, message, intent);
+
         // [END_EXCLUDE]
     }
 
@@ -60,9 +71,8 @@ public class AppGcmListenerService extends GcmListenerService {
      *
      * @param message GCM message received.
      */
-    private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    private void sendNotification(String type, String message, Intent intent) {
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
@@ -79,5 +89,17 @@ public class AppGcmListenerService extends GcmListenerService {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+
+    private Serializable paserJson(String type, String json) {
+        Gson gson = new Gson();
+
+        switch (type) {
+            case "droid":
+                return gson.fromJson(json, Droid.class);
+        }
+
+        return null;
     }
 }

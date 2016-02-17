@@ -1,5 +1,8 @@
 package com.frameworksystem.starwars.ui.activity;
 
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -18,6 +21,8 @@ import android.widget.Toast;
 
 import com.frameworksystem.starwars.Constants;
 import com.frameworksystem.starwars.R;
+import com.frameworksystem.starwars.broadcast.NetworkBroadcast;
+import com.frameworksystem.starwars.gcm.RegistrationIntentService;
 import com.frameworksystem.starwars.model.User;
 import com.frameworksystem.starwars.ui.fragment.DroidsFragment;
 import com.frameworksystem.starwars.ui.fragment.FilmsFragment;
@@ -61,6 +66,23 @@ public class MainActivity extends AppCompatActivity
         headerEmail = (TextView)header.findViewById(R.id.header_email);
         headerName = (TextView)header.findViewById(R.id.header_name);
         headerImage = (ImageView)header.findViewById(R.id.header_image);
+
+        Intent intent = new Intent(this, RegistrationIntentService.class);
+        startService(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        registerReceiver(networkBroadcast,
+                new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(networkBroadcast);
     }
 
     @Override
@@ -199,4 +221,16 @@ public class MainActivity extends AppCompatActivity
             headerImage.setImageDrawable(null);
         }
     }
+
+    private NetworkBroadcast networkBroadcast = new NetworkBroadcast() {
+        @Override
+        public void onConnected(boolean isConnected) {
+            if (isConnected) {
+                Toast.makeText(MainActivity.this, "Internet voltou!", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(MainActivity.this, "Internet caiu!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
 }
